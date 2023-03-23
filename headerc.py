@@ -75,8 +75,8 @@ def rewrite_header(header, filename):
 
 
 def main():
-    if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print("usage: headerc filename.c -arg")
+    if len(sys.argv) < 2:
+        print("usage: headerc filename.c -args")
         sys.exit(1)
     filename = sys.argv[1]
     if filename[-2:] != ".c":
@@ -97,7 +97,7 @@ def main():
     elif "-u" in sys.argv:
         update_header(header, filename)
     else:
-        print("unkown argument", sys.argv[2])
+        print("unkown arguments")
 
 if __name__ == "__main__":
     main()
