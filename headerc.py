@@ -80,7 +80,7 @@ def main():
         sys.exit(1)
     filename = sys.argv[1]
     if filename[-2:] != ".c":
-        print("usage: headerc.py filename.c")
+        print("usage: headerc filename.c -args")
         sys.exit(1)
     if(not os.path.exists(filename)):
         print("file", filename, "doesnt exist")

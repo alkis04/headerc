@@ -1,8 +1,8 @@
 # Headerc
-A simple python script to automatically create a header file from a c file
+A simple python script to automatically create a header file from a c file.
 
 ## Usage
-headerc.py filename.c
+headerc filename.c
 
 ## Arguments
 * -r : rewrite header file
@@ -25,7 +25,7 @@ bash install.sh
 ```
 
 ## Requirements
-The script requires python to run
+The script requires python to run.
 If python is not installed to your computer you will need to run the command:
 
 ```
