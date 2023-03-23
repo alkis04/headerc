@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# how to chmod in order to make it savalbe again in the terminal
+# chmod +x headerc.py
+
 import sys
 import re
 import os
