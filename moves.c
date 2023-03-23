@@ -62,7 +62,7 @@ void genBishop(char **pos, int row, int col){
     printBoard(pos);
 }
 
-char genKnight(char **pos, int row, int col){
+long long genKnight(char **pos, int row, int col){
     int x,y;
     for(int i = 0; i < 8; ++i){
         x = row + nMovesX[i];

@@ -1,7 +1,5 @@
-#include <stdio.h>
-
 void genBishop(char **pos, int row, int col);
-char genKnight(char **pos, int row, int col);
+long long genKnight(char **pos, int row, int col);
 int what ();
 long genRook(char **pos, int row, int col);
 void genQueen(char **pos, int row, int col);

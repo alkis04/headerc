@@ -21,6 +21,16 @@ def line_is_function(line):
         return True
     if(re.search(r"\w+\s+\*\*\*\*\w+\s*\(", line)):
         return True
+    if(re.search(r"\w+\s+long\s+long\s+\w+\s*\(", line)):
+        return True
+    if(re.search(r"\w+\s+long\s+long\s+\*\w+\s*\(", line)):
+        return True
+    if(re.search(r"\w+\s+long\s+long\s+\*\*\w+\s*\(", line)):
+        return True
+    if(re.search(r"\w+\s+long\s+long\s+\*\*\*\w+\s*\(", line)):
+        return True
+    if(re.search(r"\w+\s+long\s+long\s+\*\*\*\*\w+\s*\(", line)):
+        return True
     return False
 
 def extract_function_name(line):
