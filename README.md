@@ -7,7 +7,7 @@ headerc filename.c
 ## Arguments
 * -r : rewrite header file
 * -o : specify the header file to write to
-* -u : update the header file (This option is selected if no other option is specified)
+* -u : update the header file (This option is pre-selected if header file alredy exists)
 
 ## Contributing
 Feel free to create an issue or a pull request for any bugs or features you would like to see.

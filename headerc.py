@@ -11,6 +11,21 @@ def line_to_prototype(line):
         line += ";"
     return line + '\n'
 def line_is_function(line):
+    #check if line contains an if statement or an else statement or a while statement or a for statement
+    if(re.search(r"if\s*\(", line)):
+        return False
+    if(re.search(r"else\s*\(", line)):
+        return False
+    if(re.search(r"while\s*\(", line)):
+        return False
+    if(re.search(r"for\s*\(", line)):
+        return False
+    if(re.search(r"switch\s*\(", line)):
+        return False
+    if(re.search(r"case\s*\(", line)):
+        return False
+    if(re.search(r"return\s*\(", line)):
+        return False
     if re.search(r"\w+\s+\w+\s*\(", line): 
         return True
     if(re.search(r"\w+\s+\*\w+\s*\(", line)):
@@ -90,7 +105,10 @@ def main():
     else:
         header = filename[:-2] + ".h"
     if len(sys.argv) == 2:
-        update_header(header, filename)
+        if(not os.path.exists(header)):
+            rewrite_header(header, filename)
+        else:
+            update_header(header, filename)
 
     elif "-r" in sys.argv:
         rewrite_header(header, filename)
