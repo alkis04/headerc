@@ -26,9 +26,7 @@ def line_is_function(line):
     return False
 
 def extract_function_name(prototype_string):
-    name = re.search(r'\w+(?=\()', prototype_string).group()
-    print(name)
-    return name
+    return re.search(r'\w+(?=\()', prototype_string).group()
 def update_header(header, filename):
     fun_set = set()
     h_lines = []
