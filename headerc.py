@@ -11,45 +11,25 @@ def line_to_prototype(line):
         line += ";"
     return line + '\n'
 def line_is_function(line):
-    #check if line contains an if statement or an else statement or a while statement or a for statement
-    if(re.search(r"if\s*\(", line)):
-        return False
-    if(re.search(r"else\s*\(", line)):
-        return False
-    if(re.search(r"while\s*\(", line)):
-        return False
-    if(re.search(r"for\s*\(", line)):
-        return False
-    if(re.search(r"switch\s*\(", line)):
-        return False
-    if(re.search(r"case\s*\(", line)):
-        return False
-    if(re.search(r"return\s*\(", line)):
-        return False
-    if re.search(r"\w+\s+\w+\s*\(", line): 
-        return True
-    if(re.search(r"\w+\s+\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+\*\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+\*\*\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+\*\*\*\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+long\s+long\s+\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+long\s+long\s+\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+long\s+long\s+\*\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+long\s+long\s+\*\*\*\w+\s*\(", line)):
-        return True
-    if(re.search(r"\w+\s+long\s+long\s+\*\*\*\*\w+\s*\(", line)):
-        return True
+    if re.search(r"\w+\s+(\*{6,12})\s*\w+\s*\(", line):
+        print("You may want to talk to your doctor about your excessive use of pointers")
+        sys.exit(1)
+    bad_patterns = [r"if\s*\(", r"else\s*\(", r"while\s*\(", r"for\s*\(", r"switch\s*\(", r"case\s*\(", r"return\s*\(", r"main\s*\("]
+    good_patterns = [r"\w+\s*(\*{1,5})\s*\w+\s*\(", r"long\s+long\s*(\*{1,5})\s*\w+\s*\(", r"\w+\s+\w+\s*\(", r"long\s+long\s+\w+\s*\(" ]  
+    for pattern in bad_patterns:
+        if re.search(pattern, line):
+            return False
+    for pattern in good_patterns:
+        if re.search(pattern, line):
+            return True
+    
     return False
 
 def extract_function_name(line):
-    return line.split("(")[0].split()[-1]
+    name = line.split("(")[0].split()[-1]
+    while name[0] == "*":
+        name = name[1:]
+    return name
 
 def update_header(header, filename):
     fun_set = set()
@@ -94,6 +74,7 @@ def main():
         print("usage: headerc filename.c -args")
         sys.exit(1)
     filename = sys.argv[1]
+    sys.argv.remove(sys.argv[0])
     if filename[-2:] != ".c":
         print("usage: headerc filename.c -args")
         sys.exit(1)
@@ -102,20 +83,22 @@ def main():
         sys.exit(1)
     if "-o" in sys.argv:
         header = sys.argv[sys.argv.index("-o") + 1]
+        sys.argv.remove("-o")
+        sys.argv.remove(header)
     else:
         header = filename[:-2] + ".h"
-    if len(sys.argv) == 2:
-        if(not os.path.exists(header)):
-            rewrite_header(header, filename)
-        else:
-            update_header(header, filename)
-
-    elif "-r" in sys.argv:
+    for arg in sys.argv:
+        if arg != "-r" and arg != "-u" and arg != filename:
+            print("error: invalid argument", arg)
+            sys.exit(1)
+    if "-r" in sys.argv and "-u" in sys.argv:
+        print("error: -r and -u are mutually exclusive")
+        sys.exit(1)
+    if(not os.path.exists(header) or "-r" in sys.argv):
         rewrite_header(header, filename)
-    elif "-u" in sys.argv:
-        update_header(header, filename)
     else:
-        print("unkown arguments")
+        update_header(header, filename)
+
 
 if __name__ == "__main__":
     main()
